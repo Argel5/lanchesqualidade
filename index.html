@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nosso Lanche</title>
+<style>
+:root{color-scheme:light dark;--bg:#f3f7f4;--card:#fff;--tx:#14231b;--mu:#5d6f65;--bd:#d9e4dd;--pri:#15803d;--soft:#e6f4ea;--warn:#fff1cc;--hol:#ece4fa;--blue:#e3ecfb;--dan:#b42318;--acc:#f59e0b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1612;--card:#17221c;--tx:#e8f1ec;--mu:#9bb0a4;--bd:#2a3a31;--pri:#3ecf74;--soft:#173626;--warn:#4a3a10;--hol:#33274d;--blue:#1b2c4a;--dan:#ff8a80}}
+:root[data-theme="dark"]{--bg:#0e1612;--card:#17221c;--tx:#e8f1ec;--mu:#9bb0a4;--bd:#2a3a31;--pri:#3ecf74;--soft:#173626;--warn:#4a3a10;--hol:#33274d;--blue:#1b2c4a;--dan:#ff8a80}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(120deg,#14532d,#0f766e);color:#fff;padding:14px 16px 0}
+.wrap{max-width:980px;margin:0 auto}
+h1{margin:0;font-size:22px}
+.sub{font-size:12px;opacity:.85}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+#sync{font-size:12px;background:rgba(255,255,255,.18);padding:3px 10px;border-radius:99px}
+nav{display:flex;gap:6px;overflow-x:auto;margin-top:12px}
+nav button{flex:none;background:transparent;color:#fff;border:0;padding:9px 14px;border-radius:10px 10px 0 0;font:600 14px inherit;cursor:pointer;opacity:.8}
+nav button.on{background:var(--bg);color:var(--tx);opacity:1}
+main{max-width:980px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+.hid{display:none!important}
+button,input,select{font:inherit;color:inherit}
+.btn{background:var(--soft);border:1px solid var(--bd);border-radius:10px;padding:8px 12px;cursor:pointer;font-weight:600}
+.btn.pri{background:var(--pri);color:#fff;border-color:var(--pri)}
+.btn.warn{background:var(--warn)}
+.btn.dan{color:var(--dan)}
+.btn:disabled{opacity:.5}
+input,select{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;width:100%}
+input[type=checkbox]{width:auto}
+label{display:block;font-size:12px;font-weight:700;color:var(--mu);margin:10px 0 4px;text-transform:uppercase}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.big{font-size:32px;font-weight:900;margin:4px 0}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--warn)}
+.tag.ok{background:var(--soft)}.tag.hol{background:var(--hol)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.mini{border:1px solid var(--bd);border-radius:12px;padding:10px}
+.mu{color:var(--mu);font-size:13px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;min-width:560px}
+.cal .h{font-size:11px;font-weight:700;color:var(--mu);text-align:center}
+.d{min-height:74px;border:1px solid var(--bd);border-radius:10px;padding:4px 6px;font-size:12px;overflow:hidden}
+.d b{font-size:12px}.d.today{outline:2px solid var(--acc)}.d.c{background:var(--soft)}.d.p{background:var(--blue)}.d.x{background:var(--warn)}.d.f{background:var(--hol)}.d.w{opacity:.45}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--bd)}
+th{font-size:11px;text-transform:uppercase;color:var(--mu)}
+.li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+#toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#14532d;color:#fff;padding:10px 16px;border-radius:12px;font-weight:600;z-index:9}
+@media print{header,#form,.np,#toast{display:none!important}section{display:none!important}#v-his{display:block!important}body{background:#fff;color:#000}}
+#login{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
+#login .card{max-width:360px;width:100%;margin:0}
+#le{color:var(--dan);font-size:13px;min-height:18px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="top"><div><h1>🥪 Nosso Lanche</h1><div class="sub">Controle de lanches dos colaboradores · é mais gostoso em boa companhia</div></div><span class="row" style="gap:8px"><span id="sync">Conectando…</span><button id="out" style="background:rgba(255,255,255,.18);border:0;color:#fff;border-radius:99px;padding:3px 10px;font-size:12px;cursor:pointer">Sair</button></span></div>
+  <nav>
+    <button data-a="tab" data-i="hoje" class="on">🎯 Hoje</button>
+    <button data-a="tab" data-i="cal">🗓️ Calendário</button>
+    <button data-a="tab" data-i="his">📋 Histórico</button>
+    <button data-a="tab" data-i="eq">👥 Equipe</button>
+  </nav>
+</div></header>
+<main>
+  <div id="form"></div>
+
+  <section id="v-hoje">
+    <div class="card" id="hoje"></div>
+    <div class="card"><b>Próximos na sequência</b><div class="grid" id="prox" style="margin-top:10px"></div></div>
+  </section>
+
+  <section id="v-cal" class="hid">
+    <div class="card">
+      <div class="row" style="justify-content:space-between;margin-bottom:10px">
+        <b id="calt" style="font-size:18px"></b>
+        <div class="row"><button class="btn" data-a="cal" data-i="-1">←</button><button class="btn" data-a="cal" data-i="0">Hoje</button><button class="btn" data-a="cal" data-i="1">→</button></div>
+      </div>
+      <div class="mu" style="margin-bottom:8px">🟩 feito · 🟦 previsão · 🟨 adiado · 🟪 feriado. Toque no dia de hoje para dar OK.</div>
+      <div class="scroll"><div class="cal" id="cal"></div></div>
+    </div>
+  </section>
+
+  <section id="v-his" class="hid">
+    <div class="card">
+      <div class="row np" style="margin-bottom:10px"><input id="q" placeholder="Buscar por nome ou lanche…" style="flex:1;min-width:180px"><button class="btn pri" data-a="print">🖨️ Imprimir</button></div>
+      <div class="scroll"><table><thead><tr><th>Data</th><th>Colaborador</th><th>Lanche</th><th>Status</th><th class="np"></th></tr></thead><tbody id="his"></tbody></table></div>
+      <p class="mu" id="hisv" style="text-align:center"></p>
+    </div>
+  </section>
+
+  <section id="v-eq" class="hid">
+    <div class="card"><b>Ordem oficial</b><div class="mu">A rotação segue esta ordem. Use ▲ ▼ para reordenar.</div><div id="eq"></div>
+      <div class="row" style="margin-top:12px"><input id="nn" placeholder="Nome do novo colaborador" style="flex:1;min-width:160px"><button class="btn pri" data-a="addc">➕ Adicionar</button></div>
+    </div>
+    <div class="card">
+      <b>Regras</b>
+      <label style="text-transform:none;font-size:14px;color:var(--tx)"><input type="checkbox" id="wk"> Apenas dias úteis (seg a sex)</label>
+      <div class="mu">Feriados nacionais, Carnaval, Sexta Santa, Corpus Christi e 20 de setembro (RS) são pulados automaticamente.</div>
+      <label>Próximo da vez (ajuste manual)</label><select id="nx"></select>
+      <label>Adicionar feriado ou recesso</label>
+      <div class="row"><input type="date" id="hd" style="flex:1;min-width:140px"><input id="hn" placeholder="Nome" style="flex:2;min-width:140px"><button class="btn" data-a="addh">Salvar</button></div>
+      <div id="hl" style="margin-top:8px"></div>
+    </div>
+  </section>
+</main>
+<div id="login"><div class="card"><div style="font-size:34px">🥪</div><h2 style="margin:4px 0 2px">Nosso Lanche</h2><div class="mu">Entre para acessar o controle de lanches.</div>
+<label>Usuário</label><input id="lu" autocomplete="username" autocapitalize="none"><label>Senha</label><input id="lp" type="password" autocomplete="current-password">
+<p id="le"></p><button class="btn pri" id="lg" style="width:100%">Entrar</button></div></div>
+<div id="toast" class="hid"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+
+<script>
+const SB_URL='https://exjatjwnonohvzlwrtto.supabase.co';
+const SB_KEY='sb_publishable_1vJ7fE8uU_qjKFBWUWXxPw_YqcyLfBN';
+const EMAIL_DOM='@nossolanche.app';
+let sb=null,sub=null;
+const DEF=["GILBERTO","ELENICE","GILSON","GUILHERME","RUDI","ARGEL","ALEX","MAICON","MÁRIO"].map((n,i)=>({id:i+1,name:n}));
+let S={collaborators:DEF,history:[],nextIndex:0,customHolidays:[],onlyWeekdays:true};
+let ref=null,canWrite=true,tab='hoje',cal=new Date(),form=null,armed=null,mode='conectando';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const br=s=>s.split('-').reverse().join('/');
+const add=(d,n)=>{const r=new Date(d);r.setDate(r.getDate()+n);return r};
+const t0=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
+const MES=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DIA=['dom','seg','ter','qua','qui','sex','sáb'];
+const fmt=d=>DIA[d.getDay()]+' '+pad(d.getDate())+'/'+pad(d.getMonth()+1);
+
+function easter(y){const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),da=((h+l-7*m+114)%31)+1;return new Date(y,mo-1,da)}
+function hols(y){const h={};
+  [['01-01','Ano Novo'],['04-21','Tiradentes'],['05-01','Dia do Trabalho'],['09-07','Independência'],['09-20','Revolução Farroupilha (RS)'],['10-12','N. Sra. Aparecida'],['11-02','Finados'],['11-15','Proclamação da República'],['11-20','Consciência Negra'],['12-25','Natal']].forEach(([k,v])=>h[y+'-'+k]=v);
+  const e=easter(y);[[-48,'Carnaval'],[-47,'Carnaval'],[-2,'Sexta-feira Santa'],[60,'Corpus Christi']].forEach(([n,v])=>h[ymd(add(e,n))]=v);
+  (S.customHolidays||[]).forEach(x=>{if(String(x.date).startsWith(y+'-'))h[x.date]=x.name});
+  return h}
+const holName=d=>hols(d.getFullYear())[ymd(d)]||null;
+function isSnack(d){if(S.onlyWeekdays&&(d.getDay()===0||d.getDay()===6))return false;return !holName(d)}
+
+function plan(){
+  const m={};S.history.forEach(h=>{m[h.date]={h:h,st:h.status,c:{name:h.collaboratorName}}});
+  const n=S.collaborators.length;let i=S.nextIndex%n,d=t0();
+  for(let k=0;k<220;k++){const key=ymd(d);if(isSnack(d)&&!m[key]){m[key]={c:S.collaborators[i],st:'plan'};i=(i+1)%n}d=add(d,1)}
+  return m}
+
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.remove('hid');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.add('hid'),3200)}
+async function save(){
+  if(!sb)return;
+  const {error}=await sb.from('estado').upsert({id:1,dados:JSON.parse(JSON.stringify(S)),atualizado:new Date().toISOString()});
+  if(error)toast('⚠️ Não foi possível salvar: '+error.message);
+}
+async function commit(msg){render();if(msg)toast(msg);await save()}
+
+function renderHoje(){
+  const m=plan(),t=t0(),key=ymd(t),e=m[key],n=S.collaborators.length;
+  let h=`<div class="mu">${esc(fmt(t))} de ${MES[t.getMonth()]} de ${t.getFullYear()}</div><div class="mu" style="font-weight:700;text-transform:uppercase;margin-top:8px">Responsável pelo lanche</div>`;
+  if(e&&e.st==='completed')h+=`<div class="big">${esc(e.c.name)}</div><span class="tag ok">✅ Lanche confirmado</span><p>${esc(e.h.snack)}${e.h.note?' · '+esc(e.h.note):''}</p>`;
+  else if(e&&e.st==='delayed')h+=`<div class="big">${esc(e.c.name)}</div><span class="tag">🔄 Adiado para o próximo dia útil</span><p class="mu">${esc(e.h.note||'')}</p>`;
+  else if(e){const c=e.c;h+=`<div class="big">${esc(c.name)}</div><span class="tag">⏳ Aguardando confirmação</span> <span class="mu">Ordem #${(S.nextIndex%n)+1}</span>`;
+    if(canWrite)h+=`<div class="row" style="margin-top:14px"><button class="btn pri" data-a="f" data-i="ok">✅ Confirmar lanche (dar OK)</button><button class="btn warn" data-a="f" data-i="adiar">🔄 Não trouxe hoje</button><button class="btn" data-a="f" data-i="troca">🔀 Trocar de vez</button></div>`}
+  else{const nx=Object.keys(m).sort().find(k=>k>key&&m[k].st==='plan');const hn=holName(t);
+    h+=`<div class="big" style="font-size:22px">${hn?'🎉 '+esc(hn):'Hoje não há lanche'}</div><span class="tag hol">Sem lanche hoje</span>${nx?`<p>Próximo: <b>${esc(m[nx].c.name)}</b> em ${br(nx)}</p>`:''}`}
+  if(!canWrite)h+=`<p class="mu">👀 Você está no modo somente leitura.</p>`;
+  $('#hoje').innerHTML=h;
+  const ks=Object.keys(m).sort().filter(k=>k>key&&m[k].st==='plan').slice(0,4);
+  $('#prox').innerHTML=ks.map(k=>{const d=new Date(k+'T00:00:00');return `<div class="mini"><b>${esc(m[k].c.name)}</b><div class="mu">${fmt(d)}</div></div>`}).join('')}
+
+function renderCal(){
+  const y=cal.getFullYear(),mo=cal.getMonth(),m=plan(),key=ymd(t0());
+  $('#calt').textContent=MES[mo]+' de '+y;
+  let h=DIA.map(d=>`<div class="h">${d.toUpperCase()}</div>`).join('');
+  for(let i=0;i<new Date(y,mo,1).getDay();i++)h+='<div></div>';
+  for(let d=1;d<=new Date(y,mo+1,0).getDate();d++){
+    const dt=new Date(y,mo,d),k=ymd(dt),e=m[k],hn=holName(dt);let cls='d',body='';
+    if(e&&e.st==='completed'){cls+=' c';body='✅ '+esc(e.c.name)}
+    else if(e&&e.st==='delayed'){cls+=' x';body='🔄 '+esc(e.c.name)}
+    else if(e){cls+=' p';body='🥪 '+esc(e.c.name)}
+    else if(hn){cls+=' f';body='🎉 '+esc(hn)}
+    else if(dt.getDay()===0||dt.getDay()===6)cls+=' w';
+    if(k===key)cls+=' today';
+    h+=`<div class="${cls}" ${k===key&&e&&e.st==='plan'&&canWrite?'data-a="f" data-i="ok" style="cursor:pointer"':''}><b>${d}</b><div>${body}</div></div>`}
+  $('#cal').innerHTML=h}
+
+function renderHis(){
+  const q=$('#q').value.toLowerCase().trim();
+  let l=S.history.slice().sort((a,b)=>a.date<b.date?1:-1);
+  if(q)l=l.filter(r=>(r.collaboratorName+' '+r.snack+' '+r.date).toLowerCase().includes(q));
+  $('#his').innerHTML=l.map(r=>`<tr><td>${br(r.date)}</td><td><b>${esc(r.collaboratorName)}</b></td><td>${esc(r.snack)}${r.note?`<div class="mu">${esc(r.note)}</div>`:''}</td><td><span class="tag ${r.status==='completed'?'ok':''}">${r.status==='completed'?'OK':'Adiado'}</span></td><td class="np">${canWrite?`<button class="btn dan" data-a="del" data-i="${esc(r.id)}">${armed==='del'+r.id?'Confirmar?':'Excluir'}</button>`:''}</td></tr>`).join('');
+  $('#hisv').textContent=l.length?'':'Nenhum lanche registrado ainda.'}
+
+function renderEq(){
+  const n=S.collaborators.length,cur=S.nextIndex%n;
+  $('#eq').innerHTML=S.collaborators.map((c,i)=>`<div class="li"><span><b>${i+1}. ${esc(c.name)}</b> ${i===cur?'<span class="tag ok">próximo da vez</span>':''}</span>${canWrite?`<span class="row"><button class="btn" data-a="up" data-i="${i}">▲</button><button class="btn" data-a="dn" data-i="${i}">▼</button><button class="btn" data-a="f" data-i="ren" data-j="${i}">Editar</button><button class="btn dan" data-a="rm" data-i="${i}">${armed==='rm'+i?'Confirmar?':'Remover'}</button></span>`:''}</div>`).join('');
+  $('#nx').innerHTML=S.collaborators.map((c,i)=>`<option value="${i}" ${i===cur?'selected':''}>${i+1}. ${esc(c.name)}</option>`).join('');
+  $('#wk').checked=!!S.onlyWeekdays;
+  $('#hl').innerHTML=(S.customHolidays||[]).map((x,i)=>`<div class="li"><span>${br(x.date)} · ${esc(x.name)}</span>${canWrite?`<button class="btn dan" data-a="hdel" data-i="${i}">Remover</button>`:''}</div>`).join('')}
+
+function renderForm(){
+  const f=form,el=$('#form');if(!f){el.innerHTML='';return}
+  const n=S.collaborators.length,cur=S.collaborators[S.nextIndex%n];let h='<div class="card" style="border-color:var(--pri)">';
+  if(f.t==='ok')h+=`<b>✅ Dar OK no lanche de ${esc(cur.name)}</b><label>Data</label><input type="date" id="f-d" value="${ymd(t0())}"><label>Lanche trazido *</label><input id="f-s" placeholder="Ex: bolo caseiro e suco"><label>Observação (opcional)</label><input id="f-n"><div class="row" style="margin-top:12px"><button class="btn pri" data-a="okgo">Confirmar e passar a vez</button><button class="btn" data-a="fx">Cancelar</button></div>`;
+  if(f.t==='adiar')h+=`<b>🔄 ${esc(cur.name)} leva no próximo dia útil</b><div class="mu">A escala seguinte é recalculada automaticamente.</div><label>Motivo (opcional)</label><input id="f-n" placeholder="Esqueceu, faltou…"><div class="row" style="margin-top:12px"><button class="btn warn" data-a="adgo">Confirmar adiamento</button><button class="btn" data-a="fx">Voltar</button></div>`;
+  if(f.t==='troca')h+=`<b>🔀 ${esc(cur.name)} troca de vez com…</b><select id="f-o">${S.collaborators.map((c,i)=>i===S.nextIndex%n?'':`<option value="${i}">${i+1}. ${esc(c.name)}</option>`).join('')}</select><div class="row" style="margin-top:12px"><button class="btn pri" data-a="trgo">Efetuar troca</button><button class="btn" data-a="fx">Cancelar</button></div>`;
+  if(f.t==='ren')h+=`<b>Editar colaborador</b><input id="f-n" value="${esc(S.collaborators[f.j].name)}"><div class="row" style="margin-top:12px"><button class="btn pri" data-a="rngo" data-i="${f.j}">Salvar</button><button class="btn" data-a="fx">Cancelar</button></div>`;
+  el.innerHTML=h+'</div>'}
+
+function render(){
+  $('#sync').textContent=mode==='ok'?'🟢 Sincronizado':(mode==='erro'?'⚠️ Sem conexão com o banco':'Conectando…');
+  renderHoje();renderCal();renderHis();renderEq()}
+
+document.addEventListener('click',async ev=>{
+  const b=ev.target.closest('[data-a]');if(!b)return;
+  const a=b.dataset.a,i=b.dataset.i,n=S.collaborators.length,cur=S.nextIndex%n;
+  if(a!=='del'&&a!=='rm'&&armed){armed=null;renderHis();renderEq()}
+  if(a==='tab'){tab=i;['hoje','cal','his','eq'].forEach(x=>{$('#v-'+x).classList.toggle('hid',x!==i)});document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x.dataset.i===i));return}
+  if(a==='cal'){cal=i==='0'?new Date():new Date(cal.getFullYear(),cal.getMonth()+Number(i),1);renderCal();return}
+  if(a==='print'){window.print();return}
+  if(!canWrite)return;
+  if(a==='f'){form={t:i,j:b.dataset.j!=null?Number(b.dataset.j):null};renderForm();$('#form').scrollIntoView({behavior:'smooth'});return}
+  if(a==='fx'){form=null;renderForm();return}
+  if(a==='okgo'){const s=$('#f-s').value.trim(),d=$('#f-d').value;if(!s||!d){toast('Informe a data e o lanche.');return}
+    const c=S.collaborators[cur];S.history.push({id:'s'+Date.now(),date:d,collaboratorId:c.id,collaboratorName:c.name,snack:s,note:$('#f-n').value.trim(),status:'completed'});
+    S.nextIndex=(cur+1)%n;form=null;renderForm();await commit('Lanche de '+c.name+' registrado! 🎉');return}
+  if(a==='adgo'){const c=S.collaborators[cur],mt=$('#f-n').value.trim();
+    S.history.push({id:'a'+Date.now(),date:ymd(t0()),collaboratorId:c.id,collaboratorName:c.name,snack:'Lanche adiado',note:mt?'Adiado: '+mt:'Adiado para o próximo dia útil',status:'delayed'});
+    form=null;renderForm();await commit(c.name+' leva no próximo dia útil.');return}
+  if(a==='trgo'){const o=Number($('#f-o').value),t=S.collaborators[cur];S.collaborators[cur]=S.collaborators[o];S.collaborators[o]=t;form=null;renderForm();await commit('Troca realizada!');return}
+  if(a==='rngo'){const v=$('#f-n').value.trim().toUpperCase();if(!v){toast('Digite o nome.');return}S.collaborators[Number(i)].name=v;form=null;renderForm();await commit('Nome atualizado.');return}
+  if(a==='up'&&i>0||a==='dn'&&i<n-1){const x=Number(i),y=a==='up'?x-1:x+1,c=S.collaborators,t=c[x];c[x]=c[y];c[y]=t;await commit();return}
+  if(a==='addc'){const v=$('#nn').value.trim().toUpperCase();if(!v){toast('Digite o nome.');return}S.collaborators.push({id:Date.now(),name:v});$('#nn').value='';await commit(v+' adicionado!');return}
+  if(a==='rm'){if(n<=1){toast('Mantenha ao menos 1 colaborador.');return}
+    if(armed!=='rm'+i){armed='rm'+i;renderEq();return}
+    armed=null;const x=Number(i);S.collaborators.splice(x,1);if(x<S.nextIndex)S.nextIndex--;S.nextIndex%=S.collaborators.length;await commit('Colaborador removido.');return}
+  if(a==='del'){if(armed!=='del'+i){armed='del'+i;renderHis();return}armed=null;S.history=S.history.filter(h=>h.id!==i);await commit('Registro excluído.');return}
+  if(a==='addh'){const d=$('#hd').value,nm=$('#hn').value.trim();if(!d||!nm){toast('Informe data e nome.');return}S.customHolidays=(S.customHolidays||[]).concat({date:d,name:nm});$('#hn').value='';await commit('Feriado salvo.');return}
+  if(a==='hdel'){S.customHolidays.splice(Number(i),1);await commit();return}
+});
+$('#q').addEventListener('input',renderHis);
+$('#nx').addEventListener('change',async e=>{if(!canWrite)return;S.nextIndex=Number(e.target.value);await commit('Próximo da vez atualizado.')});
+$('#wk').addEventListener('change',async e=>{if(!canWrite){render();return}S.onlyWeekdays=e.target.checked;await commit()});
+
+async function load(){
+  const {data,error}=await sb.from('estado').select('dados').eq('id',1).maybeSingle();
+  if(error){mode='erro';render();return}
+  if(data&&data.dados)S=Object.assign({collaborators:DEF,history:[],nextIndex:0,customHolidays:[],onlyWeekdays:true},data.dados);
+  mode='ok';render();
+}
+function start(){
+  $('#login').classList.add('hid');load();
+  if(!sub)sub=sb.channel('estado').on('postgres_changes',{event:'*',schema:'public',table:'estado'},load).subscribe();
+}
+async function entrar(){
+  const u=$('#lu').value.trim().toLowerCase(),p=$('#lp').value;
+  if(!u||!p){$('#le').textContent='Informe usuário e senha.';return}
+  const {error}=await sb.auth.signInWithPassword({email:u.includes('@')?u:u+EMAIL_DOM,password:p});
+  if(error){$('#le').textContent='Erro: '+error.message;return}
+  $('#le').textContent='';$('#lp').value='';start();
+}
+$('#lg').addEventListener('click',entrar);
+$('#lp').addEventListener('keydown',e=>{if(e.key==='Enter')entrar()});
+$('#out').addEventListener('click',async()=>{if(sb){await sb.auth.signOut();if(sub){sb.removeChannel(sub);sub=null}}mode='conectando';$('#login').classList.remove('hid')});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&sb&&!$('#login').classList.contains('hid')===true)load()});
+render();
+(async()=>{
+  if(SB_URL.startsWith('COLE')||!window.supabase){$('#le').textContent='Configure SB_URL e SB_KEY no início do script.';return}
+  sb=window.supabase.createClient(SB_URL,SB_KEY);
+  const {data}=await sb.auth.getSession();
+  if(data&&data.session)start();
+})();
+</script>
+</body>
+</html>
